@@ -2,6 +2,7 @@ version: '3.4'
 services:
   mariadb:
     image: 'bitnami/mariadb:latest'
+    restart: always
     environment:
       ALLOW_EMPTY_PASSWORD: 'yes'
     volumes:
@@ -10,6 +11,7 @@ services:
       - 3306:3306
   redmine:
     image: 'bitnami/redmine:3.2.3-r1'
+    restart: always
     ports:
       - '8081:3000'
     volumes:
