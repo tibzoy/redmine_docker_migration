@@ -1,0 +1,30 @@
+Migration Steps:
+
+1. Execute: docker-compose up -d
+
+2. Access DB and execute: 
+- mysql -u root -p -h 127.0.0.1
+- DROP SCHEMA bitnami_redmine
+
+3. Re-create schema: CREATE SCHEMA bitnami_redmine
+
+4. Restore backup: mysql -u root -p -h 127.0.0.1 bitnami_redmine < redmine_production.sql
+
+5. Restore attachments.
+
+6. Browse to http://[hostip]:8081
+
+7. Secure root account: 
+- USE mysql;
+- UPDATE user SET password=PASSWORD('[new password]') WHERE USER = 'root';
+- FLUSH PRIVILEGES;
+
+8. Reboot the stack.
+
+TROUBLESHOOTING
+
+Clean up (optional, careful this will cause irreversible data loss!)
+- docker-compose rm -v
+- docker volume ls
+- docker volume rm redmine_mariadb_data
+- docker volume rm redmine_redmine_data
